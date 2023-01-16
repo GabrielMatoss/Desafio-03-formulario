@@ -50,7 +50,6 @@ function App() {
 
     setData((state) => {
       const newData = {...state, [name]: value};
-   
       return newData
 
     });
@@ -61,10 +60,18 @@ function App() {
       let amountToAdd = 25;
 
       if(data.fullName){
-        valueProgress += amountToAdd;
+        const explodeString = data.fullName.split(" ");
+        if(explodeString[1]){
+          valueProgress += amountToAdd;
+        }
       }
       if(data.email){
-        valueProgress += amountToAdd;
+        let pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+        if(pattern.test(data.email)){
+          valueProgress += amountToAdd;
+        }
+        
       }
       if(data.maritalStatus){
         valueProgress += amountToAdd;
@@ -72,13 +79,22 @@ function App() {
       if(data.genre){
         valueProgress += amountToAdd;
       }
-      console.log({valueProgress})
-
+      
       return valueProgress;
   }
 
   calculateProgress();
-  
+
+  function handleClick() {
+    alert("Formulário enviado com sucesso");
+    setData({
+      fullName: "",
+      email: "",
+      maritalStatus: "",
+      genre: "",
+    });
+  }
+
   return (
     <div className="App">
       <h3>desafio fernandev</h3>
@@ -140,7 +156,7 @@ function App() {
             </span>
           </div>
         </div>
-        <button>Enviar Formulário</button>
+        <button onClick={handleClick} disabled={calculateProgress() !== 100}>Enviar Formulário</button>
       </main>
     </div>
   );
