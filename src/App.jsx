@@ -45,16 +45,51 @@ function App() {
     genre: "",
   });
 
-  function handleClick() {
-    console.log("changed");
+  function handleChange(event) {
+    const {name, value} = event.target;
+
+    setData((state) => {
+      const newData = {...state, [name]: value};
+   
+      return newData
+
+    });
+  };
+
+   function calculateProgress(){
+      let valueProgress = 0;
+      let amountToAdd = 25;
+
+      if(data.fullName){
+        valueProgress += amountToAdd;
+      }
+      if(data.email){
+        valueProgress += amountToAdd;
+      }
+      if(data.maritalStatus){
+        valueProgress += amountToAdd;
+      }
+      if(data.genre){
+        valueProgress += amountToAdd;
+      }
+      console.log({valueProgress})
+
+      return valueProgress;
   }
+
+  calculateProgress();
+  
   return (
     <div className="App">
       <h3>desafio fernandev</h3>
       <h1>progresso do formulário</h1>
 
       <main>
-        {/* crie a barra de progresso aqui */}
+       <div className="bar-container">
+        <div className="bar" style={{width: `${calculateProgress()}%`}}>
+
+        </div>
+       </div>
         <div className="form-group">
           <label htmlFor="">Nome Completo</label>
           <input
